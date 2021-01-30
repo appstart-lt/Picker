@@ -359,15 +359,21 @@ class Picker : AppCompatActivity() {
 
         mBinding.imageViewClick.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
-                mBinding.imageViewVideoRedBg.visibility = GONE
-                mBinding.imageViewVideoRedBg.animate().scaleX(1f).scaleY(1f)
-                    .setDuration(300).setInterpolator(AccelerateDecelerateInterpolator()).start()
+                if (!mPickerOptions.excludeVideos) {
+                    mBinding.imageViewVideoRedBg.visibility = GONE
+                    mBinding.imageViewVideoRedBg.animate().scaleX(1f).scaleY(1f)
+                        .setDuration(300).setInterpolator(AccelerateDecelerateInterpolator())
+                        .start()
+                }
                 mBinding.imageViewClick.animate().scaleX(1f).scaleY(1f).setDuration(300)
                     .setInterpolator(AccelerateDecelerateInterpolator()).start()
             } else if (event.action == MotionEvent.ACTION_DOWN) {
-                mBinding.imageViewVideoRedBg.visibility = VISIBLE
-                mBinding.imageViewVideoRedBg.animate().scaleX(1.2f).scaleY(1.2f)
-                    .setDuration(300).setInterpolator(AccelerateDecelerateInterpolator()).start()
+                if (!mPickerOptions.excludeVideos) {
+                    mBinding.imageViewVideoRedBg.visibility = VISIBLE
+                    mBinding.imageViewVideoRedBg.animate().scaleX(1.2f).scaleY(1.2f)
+                        .setDuration(300).setInterpolator(AccelerateDecelerateInterpolator())
+                        .start()
+                }
                 mBinding.imageViewClick.animate().scaleX(1.2f).scaleY(1.2f).setDuration(300)
                     .setInterpolator(AccelerateDecelerateInterpolator()).start()
             }
