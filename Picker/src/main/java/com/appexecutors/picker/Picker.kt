@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentUris
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -17,10 +18,8 @@ import android.os.Handler
 import android.provider.MediaStore
 import android.util.DisplayMetrics
 import android.util.Log
+import android.view.*
 import android.view.HapticFeedbackConstants.LONG_PRESS
-import android.view.MotionEvent
-import android.view.ScaleGestureDetector
-import android.view.View
 import android.view.View.*
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.webkit.MimeTypeMap
@@ -256,6 +255,22 @@ class Picker : AppCompatActivity() {
             // during the lifecycle of this use case
             .setTargetRotation(rotation)
             .build()
+
+        val orientationEventListener = object : OrientationEventListener(this as Context) {
+            override fun onOrientationChanged(orientation : Int) {
+                // Monitors orientation values to determine the target rotation value
+                val rotation0 : Int = when (orientation) {
+                    in 45..134 -> Surface.ROTATION_270
+                    in 135..224 -> Surface.ROTATION_180
+                    in 225..314 -> Surface.ROTATION_90
+                    else -> Surface.ROTATION_0
+                }
+                if (imageCapture != null) {
+                    imageCapture!!.targetRotation = rotation0
+                }
+            }
+        }
+        orientationEventListener.enable()
 
         videoCapture = VideoCapture.Builder().build()
 
