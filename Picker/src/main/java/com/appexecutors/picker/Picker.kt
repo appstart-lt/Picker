@@ -281,7 +281,8 @@ class Picker : AppCompatActivity() {
             // A variable number of use-cases can be passed here -
             // camera provides access to CameraControl & CameraInfo
             camera = cameraProvider.bindToLifecycle(
-                this, cameraSelector, preview, imageCapture, videoCapture
+//                this, cameraSelector, preview, imageCapture, videoCapture
+                this, cameraSelector, preview, imageCapture // Android 7.1.1. black camera view fix
             )
 
             // Attach the viewfinder's surface provider to preview use case
